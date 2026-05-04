@@ -15,30 +15,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    @NotBlank(message = "este campo no puede estar vacio.")
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    @NotBlank(message = "La contraseña no puede estar vacía")
-    //validamos el minimo de caracteres y el maximo
-    @Size(min = 8, max = 128, message = "La contraseña debe tener entre 8 y 128 caracteres")
-    // con esto hacemos que la contraseña sea mas segura al pedir un caracter mayusculas y minusculas...etc
-    @Column(nullable = false, length = 255) // o length = 60 para BCrypt
+    @Column(nullable = false, length = 255)
     private String password;
 
-
-    //validacion del correo electronico del usuario
-    @NotBlank(message = "El campo email no puede estar vacio.")
-    @Email(message = "El campo email debe tener formato de correo [@ y DOM].")
     @Column(nullable = false, unique = true)
     private String email;
-
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime created_at;
