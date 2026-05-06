@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: config-server
+
+  # Config Server en modo nativo (lee YMLs del classpath)
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/config
+      # Deshabilitar el cliente de config en este propio servidor
+      enabled: false
+      fail-fast: false   # el server no necesita fail-fast, sólo los clientes
+
+  profiles:
+    active: native
+
+  # Base de datos Supabase
+  datasource:
+    url: jdbc:postgresql://aws-1-us-west-2.pooler.supabase.com:5432/postgres?sslmode=require
+    username: postgres.prexixehpjotlgfapwfb
+    password: H1tZ0n3p0sswo4db
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  security:
+    user:
+      name: jvaras_admin
+      password: Telco12345
+
+# Puerto del Config Server (criterio de aceptación: 8888)
+server:
+  port: 8888
+
+# Eureka Server — no se registra ni fetchea a sí mismo
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+# JWT — necesario para JwtUtil que vive en esta aplicación
+jwt:
+  secret: hitzone-super-secret-key-2026-must-be-at-least-32-chars
+  expiration-ms: 86400000   # 24 horas en milisegundos
